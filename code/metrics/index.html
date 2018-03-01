@@ -1,23 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Access to EIDA Data Archives at RESIF</title>
+
   <!-- Bootstrap core CSS -->
   <link href="./css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+ </head>
+
+ <body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 
   <div style="width: 50%; margin: 0 auto;">
   <!-- User Input -->
-  <div style="text-align: center; margin: 6px;">
-    <div style="display: inline-block;">
-      <div class="input-group">
-        <input id="network" type="text" class="form-control" placeholder="Network">
-        <span class="input-group-addon alert-info"></span>
-        <input id="station" type="text" class="form-control" placeholder="Station">
-        <span class="input-group-addon alert-info"> from </span>
-        <input type="text" class="form-control" name="date" id="dateMin" placeholder="yyyy-mm-dd"/>
-        <span class="input-group-addon alert-info"> to </span>
-        <input type="text" class="form-control" name="date" id="dateMax" placeholder="yyyy-mm-dd"/>
-        <span class="input-group-btn">
-        </span>
-      </div><!-- /input-group -->
-    </div><!-- /input-group -->
+
+  <!-- User Input -->
+  <div id="wi-StatusQueryControl" class="boxRight" style="margin-bottom: 0px;"><div class="container">
+        <div class="col-xs-12 col-sm-9">
+          <div class="row">
+            <div class="col-xs-12 col-lg-12">
+                <p style="font-size: 18px;"> <br><br> RESIF Data Quality Inspector
+                <p style="font-size: 12px;"> <br>Calendars showing the data metrics of the selected station for all available channels.<br><br>
+
+  <div style="display: inline-block;">
+    <div class="input-group" style="max-width: 400px;">
+      <input id="network" type="text" class="form-control" placeholder="Network">
+      <span class="input-group-addon"></span>
+      <input id="station" type="text" class="form-control" placeholder="Station">
+    </div>
   </div>
+
+  <div style="display: inline-block;">
+    <div class="input-group" style="max-width: 400px;">
+      <span class="input-group-addon"> from </span>
+      <input type="text" class="form-control datePicker" name="date" id="dateMin" placeholder="yyyy-mm-dd">
+      <span class="input-group-addon"> to </span>
+      <input type="text" class="form-control datePicker" name="date" id="dateMax" placeholder="yyyy-mm-dd"/>
+      <span class="input-group-btn">
+      </span>
+    </div><!-- /input-group -->
+  </div><!-- /input-group -->
+
+ <script>
+        $('#dateMin,#dateMax').datepicker({
+        todayBtn: true,
+        orientation: "top auto",
+        keyboardNavigation: false,
+        forceParse: false,
+        daysOfWeekDisabled: "0",
+        daysOfWeekHighlighted: "0",
+        autoclose: true,
+        toggleActive: true,
+        format: 'yyyy-mm-dd'
+            });
+ </script>
+
+
 
   <div style="text-align: center; margin: 6px;">
     <button class="btn btn-info" type="button" id="request"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> View Data Metrics</button>
@@ -79,4 +122,5 @@
 
     <!-- Metrics javascript -->
     <script src="./js/interface.js"></script>
-
+  </body>
+</html>
