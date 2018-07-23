@@ -1,47 +1,77 @@
+
+// Globals
 var cache, channelCodes;
 var WFCATALOG_ADDRESS = "http://ws.resif.fr/eidaws/wfcatalog/1/query";
-var SUGGESTION_SCRIPT = "./scripts/filter-by.php";
-var ENABLE_SUGGESTIONS = false;
-var NODE = "RESIF Data Center"
+var ENABLE_SUGGESTIONS = true;
+var NODE = "RESIF Data Center";
+
 
 $(function () {
-
-  // Suggestions are read from the EIDA db
-  // and show available networks, stations from a particular node
-  // this is optional
   if(ENABLE_SUGGESTIONS) {
-
-    // Station typeahead
-    $("#station").typeahead({
-      "minlength": 0,
-      "items": 10,
-      "source": function(_, process) {
-        var network = $("#network").val();
-        if(network === "") {
-          return new Array();
-        }
-        return $.get(SUGGESTION_SCRIPT, {"network": network}, function(json, _, jqXHR) {
-          if(jqXHR.status === 200) {
-            process(json.sort());
-          }
-        });
-      }
-    });
-  
     // Network typeahead
     $("#network").typeahead({
-      "minlength": 0,
-      "items": 10,
-      "source": function(_, process) {
-        return $.get(SUGGESTION_SCRIPT, null, function(json, _, jqXHR) {
-          if(jqXHR.status === 200) {
-            process(json.sort());
-          }
-        });
-      }
+      "minLength": 0,
+      "items": 'all',//le max de nombre d'items affiché
+      "source": function (query, process) {
+          return $.ajax({
+              type: 'GET',// chargement du fichier externe monfichier-ajax.php 
+              url      : "http://ws.resif.fr/fdsnws/station/1/query?level=network",
+              // Passage des données au fichier externe (ici le nom cliqué)  
+              error    : function(request, error) { // Info Debuggage si erreur         
+                        alert("Erreur : responseText: "+request.responseText);//+request.responseText);
+                        },
+              success  : function(data) {  
+                          // Informe l'utilisateur que l'opération est terminé et renvoie le résultat
+                          var list = [];
+                          var racine = data.documentElement;
+                          var networks = racine.getElementsByTagName("Network") ;
+                          for(var i=0; i< networks.length; i++){
+                            var ele = networks[i].getAttribute("code")
+                            list[i] = ele
+                          }
+
+                          process(list);
+                        }
+            });   
+        }
+    });
+    $("#network").focus(function() {
+      $("#station").val("");
+  
     });
 
+
+    $("#station").typeahead({  
+      "minLength": 0,
+      "items": 'all', // a changer peut etre 
+      "source": function (query, process) {
+
+          var  valeur = document.getElementById("network").value;
+          return $.ajax({
+          type: 'GET',
+          // chargement du fichier externe monfichier-ajax.php 
+          url      : "http://ws.resif.fr/fdsnws/station/1/query?level=station&network="+valeur,
+          // Passage des données au fichier externe (ici le nom cliqué)  
+          error    : function(request, error) { // Info Debuggage si erreur         
+                      alert("Erreur : responseText: "+request.responseText);//+request.responseText);
+                    },
+          success  : function(data) {  
+                      // Informe l'utilisateur que l'opération est terminé et renvoie le résultat
+                      var list = [];
+                      var racine = data.documentElement;
+                      var networks = racine.getElementsByTagName("Station") ;
+                      for(var i=0; i< networks.length; i++){
+                          var ele = networks[i].getAttribute("code");
+                          //var nom = ele.nodeName
+                          list[i] = ele;
+                      }
+                      process(list);
+                    }       
+            }); 
+        }
+      });
   }
+
 
   function controlsVisible(b) {
     b ? $("#controls").show() : $("#controls").hide();

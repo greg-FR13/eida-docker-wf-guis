@@ -10,11 +10,22 @@
 
  </head>
 
- <body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"></script>
+
+    <!-- highcharts libs -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/boost.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
+  <!-- Metrics javascript -->
+  <script src="./js/interface.js"></script>
+
+  <body>
 
   <div style="width: 50%; margin: 0 auto;">
   <!-- User Input -->
@@ -52,10 +63,9 @@
         orientation: "top auto",
         keyboardNavigation: false,
         forceParse: false,
-        daysOfWeekDisabled: "0",
-        daysOfWeekHighlighted: "0",
         autoclose: true,
         toggleActive: true,
+	daysOfWeekHighlighted: "0",
         format: 'yyyy-mm-dd'
             });
  </script>
@@ -112,15 +122,6 @@
     <div id="chartContainer"></div>
     </div>
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-    <!-- highcharts libs -->
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/boost.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-
-    <!-- Metrics javascript -->
-    <script src="./js/interface.js"></script>
   </body>
 </html>
