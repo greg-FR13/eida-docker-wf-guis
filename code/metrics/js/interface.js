@@ -2,6 +2,7 @@
 // Globals
 var cache, channelCodes;
 var WFCATALOG_ADDRESS = "http://ws.resif.fr/eidaws/wfcatalog/1/query";
+var FDSNWS_ADDRESS = "http://ws.resif.fr/fdsnws/station/1/query";
 var ENABLE_SUGGESTIONS = true;
 var NODE = "RESIF Data Center";
 
@@ -15,7 +16,7 @@ $(function () {
       "source": function (query, process) {
           return $.ajax({
               type: 'GET',// chargement du fichier externe monfichier-ajax.php 
-              url      : "http://ws.resif.fr/fdsnws/station/1/query?level=network",
+              url      : FDSNWS_ADDRESS + "?level=network",
               // Passage des données au fichier externe (ici le nom cliqué)  
               error    : function(request, error) { // Info Debuggage si erreur         
                         alert("Erreur : responseText: "+request.responseText);//+request.responseText);
@@ -50,7 +51,7 @@ $(function () {
           return $.ajax({
           type: 'GET',
           // chargement du fichier externe monfichier-ajax.php 
-          url      : "http://ws.resif.fr/fdsnws/station/1/query?level=station&network="+valeur,
+          url      : FDSNWS_ADDRESS + "?level=station&network=" + valeur,
           // Passage des données au fichier externe (ici le nom cliqué)  
           error    : function(request, error) { // Info Debuggage si erreur         
                       alert("Erreur : responseText: "+request.responseText);//+request.responseText);
